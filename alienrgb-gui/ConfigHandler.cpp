@@ -1,4 +1,4 @@
-#include "ConfigHandler.h"
+﻿#include "ConfigHandler.h"
 #include "ConfigFan.h"
 #include "RegHelperLib.h"
 #include "Common.h"
@@ -43,7 +43,7 @@ ConfigHandler::~ConfigHandler() {
 profile* ConfigHandler::FindCreateProfile(unsigned id) {
 	profile* prof = FindProfile(id);
 	if (!prof) {
-		prof = new profile{ id, "New Profile"};
+		prof = new profile{ id, "新建配置"};
 		profiles.push_back(prof);
 	}
 	return prof;
@@ -55,7 +55,7 @@ AlienRGB_SDK::Afx_group* ConfigHandler::FindCreateGroup(int groupID) {
 		groupID = 0x1ffff;
 
 	if (!(grp = afx_dev.GetGroupById(groupID))) {
-		afx_dev.GetGroups()->push_back({ (DWORD)groupID, "New zone #" + to_string((groupID & 0xffff) + 1) });
+		afx_dev.GetGroups()->push_back({ (DWORD)groupID, "新建区域 #" + to_string((groupID & 0xffff) + 1) });
 		grp = &afx_dev.GetGroups()->back();
 	}
 
@@ -336,7 +336,7 @@ void ConfigHandler::Load() {
 
 	if (profiles.empty()) {
 		// need new profile
-		profile* prof = new profile({ 0, "Default", {PROF_DEFAULT, 1} });
+		profile* prof = new profile({ 0, "默认", {PROF_DEFAULT, 1} });
 		profiles.push_back(prof);
 		activeProfileID = 0;
 	}

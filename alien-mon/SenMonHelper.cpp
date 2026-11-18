@@ -1,4 +1,4 @@
-#include "SenMonHelper.h"
+﻿#include "SenMonHelper.h"
 #include "common.h"
 
 #pragma comment(lib, "pdh.lib")
@@ -96,8 +96,8 @@ SENSOR* SenMonHelper::UpdateSensor(SENID sid, long val) {
 			bool alarming = sen->direction ? val < sen->ap : val >= sen->ap;
 			if (sen->alarm && !sen->alarming && alarming && sen->sname.size() && !conf->alarming) {
 				//Shell_NotifyIcon(NIM_DELETE, &conf->niData);
-				ShowNotification(&conf->niData, "Alarm triggered!", "Sensor \"" + sen->sname +
-					"\" " + (sen->direction ? "lower " : "higher ") + to_string(sen->ap) + " (Current: " + to_string(val) + ")!");
+				ShowNotification(&conf->niData, "告警触发！", "传感器 \"" + sen->sname +
+					"\" " + (sen->direction ? "低于 " : "高于 ") + to_string(sen->ap) + " (当前: " + to_string(val) + ")!");
 				conf->alarming = true;
 			}
 			sen->alarming = alarming;
@@ -132,7 +132,7 @@ string SenMonHelper::GetFanName(int index) {
 	case 6: fname = "GPU"; break;
 	//default: fname = "";
 	}
-	return fname + " Fan " + to_string(index + 1);
+	return fname + " 风扇 " + to_string(index + 1);
 }
 
 void SenMonHelper::UpdateSensors()
@@ -147,32 +147,32 @@ void SenMonHelper::UpdateSensors()
 	if (conf->wSensors) { // group 0
 		if (PdhGetFormattedCounterValue(hCPUCounter, PDH_FMT_LONG, &cType, &cCPUVal) == ERROR_SUCCESS && // CPU, code 0
 			(sen = UpdateSensor({ 0, 0, 0 }, cCPUVal.longValue)))
-			sen->sname = "CPU load";
+			sen->sname = "CPU 负载";
 
 		if (GlobalMemoryStatusEx(&memStat) && // RAM, code 1
 		   (sen = UpdateSensor({ 0, 1, 0 }, memStat.dwMemoryLoad)))
-			sen->sname = "Memory usage";
+			sen->sname = "内存使用率";
 
 		if (PdhGetFormattedCounterValue(hHDDCounter, PDH_FMT_LONG, &cType, &cHDDVal) == ERROR_SUCCESS && // HDD, code 2
 			(sen = UpdateSensor({ 0, 2, 0 }, 99 - cHDDVal.longValue)))
-			sen->sname = "HDD load";
+			sen->sname = "硬盘负载";
 
 		if (GetSystemPowerStatus(&state) && // Battery, code 3
 			(sen = UpdateSensor({ 0, 3, 0 }, state.BatteryLifePercent)))
-			sen->sname = "Battery";
+			sen->sname = "电池";
 
 		// New: battery charge/discharge rate
 		valCount = GetValuesArray(hBDCounter); // Temps, code 5
 		for (WORD i = 0; i < valCount; i++) {
 			if (cv[i].FmtValue.CStatus == PDH_CSTATUS_VALID_DATA &&
 				(sen = UpdateSensor({ (WORD)(i + 1), 3, 0 }, cv[i].FmtValue.longValue / 1000)))
-				sen->sname = "Battery " + to_string(i+1) + " Discharge rate";
+				sen->sname = "电池 " + to_string(i+1) + " 放电率";
 		}
 		valCount = GetValuesArray(hBCCounter); // Temps, code 5
 		for (WORD i = 0; i < valCount; i++) {
 			if (cv[i].FmtValue.CStatus == PDH_CSTATUS_VALID_DATA &&
 				(sen = UpdateSensor({ (WORD)(i + 0x101), 3, 0 }, cv[i].FmtValue.longValue / 1000)))
-				sen->sname = "Battery " + to_string(i + 1) + " Charge rate";
+				sen->sname = "电池 " + to_string(i + 1) + " 充电率";
 		}
 
 		valCount = GetValuesArray(hGPUCounter); // GPU, code 4
@@ -218,16 +218,16 @@ void SenMonHelper::UpdateSensors()
 		// Fan data
 		for (WORD i = 0; i < acpi->fans.size(); i++) { // BIOS fans, code 1-3
 			if (sen = UpdateSensor({ i, 1, 2 }, acpi->GetFanRPM(i)))
-				sen->sname = GetFanName(i) + " RPM";
+				sen->sname = GetFanName(i) + " 转速";
 			int fp = acpi->GetFanPercent(i);
 			if (fp < 0) {
 				// Not supported, calculating....
 				fp = 100 * acpi->GetFanRPM(i) / acpi->GetMaxRPM(i);
 			}
 			if (sen = UpdateSensor({ i, 2, 2 }, fp))
-				sen->sname = GetFanName(i) + " percent";
+				sen->sname = GetFanName(i) + " 百分比";
 			if (sen = UpdateSensor({ i, 3, 2 }, acpi->GetFanBoost(i)))
-				sen->sname = GetFanName(i) + " boost";
+				sen->sname = GetFanName(i) + " 加速";
 		}
 	} else
 		if (conf->eSensors) {
@@ -246,7 +246,7 @@ void SenMonHelper::UpdateSensors()
 		for (WORD i = 0; i < valCount; i++) {
 			if (cv[i].FmtValue.CStatus == PDH_CSTATUS_VALID_DATA &&
 				(sen = UpdateSensor({ i, 1, 1 }, cv[i].FmtValue.longValue / 10)))
-				sen->sname = "ESIF Power " + to_string(i + 1);
+				sen->sname = "ESIF 功率 " + to_string(i + 1);
 		}
 	}
 }

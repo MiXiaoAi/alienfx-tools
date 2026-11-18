@@ -1,4 +1,4 @@
-#include <windowsx.h>
+﻿#include <windowsx.h>
 #include "resource.h"
 #include "ConfigMon.h"
 #include "SenMonHelper.h"
@@ -123,7 +123,7 @@ char* GetSensorName(SENSOR* id) {
 	return (LPSTR)(id->name.length() ? id->name : id->sname).c_str();
 }
 
-const char* uiColumns[] = { "Min", "Cur", "Max", "Source", "Name" };
+const char* uiColumns[] = { "最小", "当前", "最大", "来源", "名称" };
 const char sid0[] = { 'C', 'R', 'H', 'B', 'G', 'T' };
 
 void SetNumValue(HWND list, int pos, int col, int val) {
@@ -268,7 +268,7 @@ void UpdateTrayData(SENSOR* sen) {
 	else
 		sprintf_s(val, "00");
 
-	sprintf_s(niData->szTip, 128, "%s\nMin: %d\nCur: %d\nMax: %d", GetSensorName(sen), sen->min, sen->cur, sen->max);
+	sprintf_s(niData->szTip, 128, "%s\n最小: %d\n当前: %d\n最大: %d", GetSensorName(sen), sen->min, sen->cur, sen->max);
 
 	RECT clip{ 0,0,32,32 };
 
@@ -444,7 +444,7 @@ BOOL CALLBACK DialogMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 			break;
 		case IDC_SHOW_HIDDEN:
 			conf->showHidden = state;
-			SetDlgItemText(hDlg, IDC_BUT_HIDE, state ? "Unhide" : "Hide");
+			SetDlgItemText(hDlg, IDC_BUT_HIDE, state ? "取消隐藏" : "隐藏");
 			conf->selection[!state] = selSensor;
 			selSensor = conf->selection[state];
 			ReloadSensorView();

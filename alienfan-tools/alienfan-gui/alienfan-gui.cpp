@@ -1,4 +1,4 @@
-#include <windowsx.h>
+﻿#include <windowsx.h>
 //#include <windows.h>
 #include "Resource.h"
 #include "ConfigFan.h"
@@ -23,7 +23,7 @@ MonHelper* mon = NULL;                          // Monitoring object
 UINT newTaskBar = RegisterWindowMessage(TEXT("TaskbarCreated"));
 HWND mDlg = NULL, fanWindow = NULL, tipWindow = NULL, tempList = NULL;
 
-const char* pModes[] = { "Off", "Enabled", "Aggressive", "Efficient", "Efficient aggressive", ""};
+const char* pModes[] = { "关闭", "启用", "激进", "节能", "节能激进", ""};
 
 GUID* sch_guid, perfset;
 
@@ -118,7 +118,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else {
             if (AddTrayIcon(&niDataFC, false)) {
-                ShowNotification(&niDataFC, "Error", "Compatible hardware not found!");
+                ShowNotification(&niDataFC, "错误", "未找到兼容的硬件！");
                 Sleep(5000);
                 DestroyWindow(mDlg);
             }
@@ -196,7 +196,7 @@ LRESULT CALLBACK FanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
         RECT cDlg;
         GetWindowRect(hDlg, &cDlg);
         int wh = cDlg.bottom - cDlg.top;
-        tipWindow = fanWindow = CreateWindow("STATIC", "Fan curve", WS_CAPTION | WS_POPUP | WS_SIZEBOX,
+        tipWindow = fanWindow = CreateWindow("STATIC", "风扇曲线", WS_CAPTION | WS_POPUP | WS_SIZEBOX,
                                  cDlg.right, cDlg.top, wh, wh,
                                  hDlg, NULL, hInst, 0);
         SetWindowLongPtr(fanWindow, GWLP_WNDPROC, (LONG_PTR) FanCurve);
@@ -284,7 +284,7 @@ LRESULT CALLBACK FanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
             break;
         case IDM_SAVE:
             fan_conf->Save();
-            ShowNotification(&niDataFC, "Configuration saved!", "Configuration saved successfully.");
+            ShowNotification(&niDataFC, "配置已保存", "配置保存成功。");
             break;
         case IDM_SETTINGS_STARTWITHWINDOWS:
             ToggleValue(fan_conf->startWithWindows, wmId);
@@ -327,7 +327,7 @@ LRESULT CALLBACK FanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
             break;
         case IDC_FAN_RESET:
         {
-            if (WarningBox(hDlg, "Do you want to clear all curves for this fan?")) {
+            if (WarningBox(hDlg, "确定要清除该风扇的所有曲线吗？")) {
                 fan_conf->GetFanBlocks()->clear();
                 ReloadTempView(tempList);
             }
@@ -386,7 +386,7 @@ LRESULT CALLBACK FanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
     } break;
     case WM_APP + 2:
         EnableWindow(power_list, (bool)lParam);
-        SetWindowText(GetDlgItem(hDlg, IDC_BUT_OVER), (bool)lParam ? "Check\n Max. boost" : "Stop check");
+        SetWindowText(GetDlgItem(hDlg, IDC_BUT_OVER), (bool)lParam ? "检测\n最大加速" : "停止检测");
         break;
     case WM_APP + 1:
     {
@@ -405,7 +405,7 @@ LRESULT CALLBACK FanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                     i, (LPSTR)fan_conf->powers[mon->acpi->powers[i]].c_str());
             }
 
-            ModifyMenu(tMenu, ID_MENU_POWER, MF_BYCOMMAND | MF_STRING | MF_POPUP, (UINT_PTR)pMenu, ("Power mode - " +
+            ModifyMenu(tMenu, ID_MENU_POWER, MF_BYCOMMAND | MF_STRING | MF_POPUP, (UINT_PTR)pMenu, ("电源模式 - " +
                 fan_conf->powers[mon->acpi->powers[fan_conf->lastProf->powerStage]]).c_str());
             EnableMenuItem(tMenu, ID_MENU_GMODE, mon->acpi->isGmode ? MF_ENABLED : MF_DISABLED);
             CheckMenuItem(tMenu, ID_MENU_GMODE, fan_conf->lastProf->gmodeStage ? MF_CHECKED : MF_UNCHECKED);
@@ -438,7 +438,7 @@ LRESULT CALLBACK FanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
         case WM_MOUSEMOVE: {
             if (!toolTipShown) {
                 WORD powerMode = mon->GetSensorData();
-                string tooltip = string("Power: ") + fan_conf->GetPowerName(&mon->acpi->powers, powerMode);
+                string tooltip = string("电源: ") + fan_conf->GetPowerName(&mon->acpi->powers, powerMode);
                 for (int i = 0; i < mon->fansize; i++) {
                     tooltip.append("\n" + GetFanName(i, true));
                 }

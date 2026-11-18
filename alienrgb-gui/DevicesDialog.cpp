@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "EventHandler.h"
 #include "FXHelper.h"
 #include "Common.h"
@@ -47,11 +47,11 @@ AlienRGB_SDK::Afx_device* activeDevice = NULL;
 void ResetPower()
 {
 	if (activeDevice->present && activeDevice->dev->version < AlienRGB_SDK::API_V5) {
-		ShowNotification(&conf->niData, "Warning", "Reassigning power button, please wait...");
+		ShowNotification(&conf->niData, "警告", "正在重新分配电源键，请稍候...");
 		AlienRGB_SDK::Afx_lightblock act{ (byte)(keySetLight->flags & ALIENRGB_FLAG_POWER ?
 			 keySetLight->lightid : 127), {{AlienRGB_SDK::AlienFX_A_Power, 3, 0x64}, {AlienRGB_SDK::AlienFX_A_Power, 3, 0x64}} };
 		activeDevice->dev->SetPowerAction(&act);
-		ShowNotification(&conf->niData, "Warning", "You may need to reset light system hardware!");
+		ShowNotification(&conf->niData, "警告", "可能需要重置灯光系统硬件！");
 	}
 }
 
@@ -142,8 +142,8 @@ BOOL CALLBACK WhiteBalanceDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 void SetLightInfo() {
 	fxhl->TestLight(activeDevice, eLid);
 	keySetLight = conf->afx_dev.GetMappingByDev(activeDevice, eLid);
-	SetDlgItemText(dDlg, IDC_EDIT_NAME, keySetLight ? keySetLight->name.c_str() : "<unused>");
-	SetDlgItemText(dDlg, IDC_STATIC_SCANCODE, keySetLight && keySetLight->scancode ? GetKeyName((WORD)keySetLight->scancode).c_str() : "Off");
+	SetDlgItemText(dDlg, IDC_EDIT_NAME, keySetLight ? keySetLight->name.c_str() : "<未使用>");
+	SetDlgItemText(dDlg, IDC_STATIC_SCANCODE, keySetLight && keySetLight->scancode ? GetKeyName((WORD)keySetLight->scancode).c_str() : "关");
 	SetDlgItemInt(dDlg, IDC_LIGHTID, eLid, false);
 	CheckDlgButton(dDlg, IDC_ISPOWERBUTTON, keySetLight && keySetLight->flags & ALIENRGB_FLAG_POWER);
 	CheckDlgButton(dDlg, IDC_CHECK_INDICATOR, keySetLight && keySetLight->flags & ALIENRGB_FLAG_INDICATOR);
@@ -431,7 +431,7 @@ BOOL CALLBACK TabDevicesDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			}
 			break;
 		case IDC_BUT_DEVCLEAR:
-			if (WarningBox(hDlg, "Do you want to clear all device information?")) {
+			if (WarningBox(hDlg, "确定要清空所有设备信息吗？")) {
 				// remove all lights
 				int ls = (int)activeDevice->lights.size();
 				activeDevice->lights.clear();
@@ -462,7 +462,7 @@ BOOL CALLBACK TabDevicesDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			break;
 		case IDC_BUT_CLEAR:
 			if (keySetLight) {
-				if (WarningBox(hDlg, "Do you want to remove light?")) {
+				if (WarningBox(hDlg, "确定要移除该灯光吗？")) {
 					if (keySetLight->flags & ALIENRGB_FLAG_POWER) {
 						keySetLight->flags = 0;
 						ResetPower();
@@ -586,7 +586,7 @@ BOOL CALLBACK TabDevicesDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 								it++;
 						}
 						AlienRGB_SDK::Afx_groupLight* newGrid = new AlienRGB_SDK::Afx_groupLight[conf->mainGrid->x * conf->mainGrid->y]{ 0 };
-						conf->afx_dev.GetGrids()->push_back({ newGridIndex, conf->mainGrid->x, conf->mainGrid->y, "Grid #" + to_string(newGridIndex), newGrid });
+						conf->afx_dev.GetGrids()->push_back({ newGridIndex, conf->mainGrid->x, conf->mainGrid->y, "网格 #" + to_string(newGridIndex), newGrid });
 						conf->mainGrid = &conf->afx_dev.GetGrids()->back();
 						TCITEM tie{ TCIF_TEXT };
 						tie.pszText = (LPSTR)conf->mainGrid->name.c_str();

@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "EventHandler.h"
 #include "FXHelper.h"
 #include "MonHelper.h"
@@ -17,11 +17,11 @@ extern EventHandler* eve;
 
 event* ev = NULL;
 
-const char* eventTypeNames[] = { "Performance", "Indicator" };
-const char* eventNamesP[] = { "CPU load", "RAM load", "Storage load", "GPU load", "Network", "Temperature", "Battery level",
-			"Fans RPM", "Power usage", "Power mode", ""},
-			*eventNamesI[] = { "Storage activity", "Network activity", "System overheat", "Out of memory", "Low battery", "Selected language",
-				"BIOS Power mode", "Power source", ""};
+const char* eventTypeNames[] = { "性能", "指示灯" };
+const char* eventNamesP[] = { "CPU 负载", "内存负载", "磁盘负载", "GPU 负载", "网络", "温度", "电池电量",
+			"风扇转速", "功耗", "电源模式", ""},
+			*eventNamesI[] = { "磁盘活动", "网络活动", "系统过热", "内存不足", "低电量", "系统语言",
+				"BIOS 电源模式", "电源类型", ""};
 
 int eventID = 0;
 

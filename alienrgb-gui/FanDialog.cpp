@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "MonHelper.h"
 #include "common.h"
 
@@ -19,7 +19,7 @@ extern string GetFanName(int ind, bool forTray = false);
 extern HANDLE ocStopEvent;
 extern void DrawFan();
 
-const char* pModes[] = { "Off", "Enabled", "Aggressive", "Efficient", "Efficient aggressive", "" };
+const char* pModes[] = { "关闭", "启用", "激进", "节能", "节能激进", "" };
 
 BOOL CALLBACK TabFanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -110,7 +110,7 @@ BOOL CALLBACK TabFanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
         } break;
         case IDC_FAN_RESET:
         {
-            if (WarningBox(hDlg, "Do you want to clear all fan curves?")) {
+            if (WarningBox(hDlg, "确定要清除所有风扇曲线吗？")) {
                 fan_conf->GetFanBlocks()->clear();
                 ReloadTempView(tempList);
             }
@@ -153,7 +153,7 @@ BOOL CALLBACK TabFanDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
     } break;
     case WM_APP + 2:
         EnableWindow(power_list, (bool)lParam);
-        SetWindowText(GetDlgItem(hDlg, IDC_BUT_OVER), (bool)lParam ? "Check\n Max. boost" : "Stop check");
+        SetWindowText(GetDlgItem(hDlg, IDC_BUT_OVER), (bool)lParam ? "检测\n最大加速" : "停止检测");
         break;
     case WM_NOTIFY:
         switch (((NMHDR*)lParam)->idFrom) {

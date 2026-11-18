@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "common.h"
 #include "EventHandler.h"
 #include "FXHelper.h"
@@ -47,7 +47,7 @@ void RebuildGEColorsList(HWND hDlg) {
 			delete[] picData;
 			ImageList_Add(hSmall, colorBox, NULL);
 			DeleteObject(colorBox);
-			string name = i ? "Phase " + to_string(i) : "Background";
+			string name = i ? "阶段 " + to_string(i) : "背景";
 			lItem.iImage = i;
 			lItem.pszText = (LPSTR)name.c_str();
 			// check selection...
@@ -99,8 +99,8 @@ void UpdateEffectInfo(HWND hDlg) {
 	RebuildGEColorsList(hDlg);
 }
 
-const char* triggerNames[] = { "Off", "Continues", "Keyboard", "Event", "Ambient", "" },
-	*effectTypeNames[] = { "Running light", "Wave", "Gradient", "Fill", "Star field", "Fade", ""};
+const char* triggerNames[] = { "无", "持续", "键盘", "事件", "环境光", "" },
+	*effectTypeNames[] = { "流光", "波浪", "渐变", "填充", "星空", "淡入淡出", ""};
 
 BOOL CALLBACK TabGridDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
 	HWND speed_slider = GetDlgItem(hDlg, IDC_SLIDER_SPEED),

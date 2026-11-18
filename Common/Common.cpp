@@ -1,4 +1,4 @@
-#include "Common.h"
+﻿#include "Common.h"
 #include <windowsx.h>
 #include <WinInet.h>
 //#include <Psapi.h>
@@ -19,7 +19,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_INITDIALOG: {
-		SetDlgItemText(hDlg, idc_version, ("Version: " + GetAppVersion()).c_str());
+		SetDlgItemText(hDlg, idc_version, ("版本: " + GetAppVersion()).c_str());
 	} break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
@@ -61,7 +61,7 @@ void BlinkNumLock(int howmany) {
 }
 
 bool WarningBox(HWND hDlg, const char* msg) {
-	return GetKeyState(VK_SHIFT) & 0xf0 || MessageBox(hDlg, msg, "Warning", MB_YESNO | MB_ICONWARNING) == IDYES;
+	return GetKeyState(VK_SHIFT) & 0xf0 || MessageBox(hDlg, msg, "警告", MB_YESNO | MB_ICONWARNING) == IDYES;
 }
 
 bool EvaluteToAdmin(HWND dlg) {
@@ -172,11 +172,11 @@ DWORD WINAPI CUpdateCheck(LPVOID lparam) {
 					//string eres = GetAppVersion(false);
 					if (res.compare(GetAppVersion(false)) != 0) {
 						// new version detected!
-						ShowNotification(niData, "Update available!", "Latest version is " + res);
+						ShowNotification(niData, "发现新版本！", "最新版本为 " + res);
 						isNewVersion = true;
 					} else
 						if (needUpdateFeedback)
-							ShowNotification(niData, "You are up to date!", "You are using latest version.");
+							ShowNotification(niData, "已是最新版本！", "您正在使用最新版本。");
 				}
 			}
 			InternetCloseHandle(req);
@@ -184,7 +184,7 @@ DWORD WINAPI CUpdateCheck(LPVOID lparam) {
 		InternetCloseHandle(session);
 	}
 	if (needUpdateFeedback && !req)
-			ShowNotification(niData, "Update check failed!", "Can't connect to GitHub for update check.");
+			ShowNotification(niData, "检查更新失败！", "无法连接 GitHub 进行更新检查。");
 	delete[] buf;
 	needUpdateFeedback = false;
 	return 0;

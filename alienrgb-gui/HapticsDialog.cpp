@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "EventHandler.h"
 #include "WSAudioIn.h"
 #include "Common.h"
@@ -102,7 +102,7 @@ void SetFreqGroups(HWND hDlg) {
 	if (activeMapping && activeMapping->haptics.size()) {
 		// Set groups
 		for (int j = 0; j < activeMapping->haptics.size(); j++) {
-			int pos = ListBox_AddString(grp_list, ("Group " + to_string(j + 1)).c_str());
+			int pos = ListBox_AddString(grp_list, ("组 " + to_string(j + 1)).c_str());
 			if (freqItem == pos) {
 				ListBox_SetCurSel(grp_list, pos);
 				freqBlock = &activeMapping->haptics[pos];
@@ -162,8 +162,8 @@ INT_PTR CALLBACK FreqLevels(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 			DrawFreq(hDlg);
 		}
 		int freq = eve->audio ? ((WSAudioIn*)eve->audio)->pwfx->nSamplesPerSec >> 1 : 22050;
-		SetToolTip(hToolTip, "Freq: " + to_string(cIndex ? freq - (int)round((log(21 - cIndex) * freq / log_divider)) : 20) +
-			"-" + to_string(freq - (int)round((log(20 - cIndex) * freq / log_divider))) + " Hz, Level: " +
+		SetToolTip(hToolTip, "频率: " + to_string(cIndex ? freq - (int)round((log(21 - cIndex) * freq / log_divider)) : 20) +
+			"-" + to_string(freq - (int)round((log(20 - cIndex) * freq / log_divider))) + " Hz，强度: " +
 			to_string(clickLevel * 100 / 255));
 	} break;
 	case WM_PAINT:

@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include <ColorDlg.h>
 #include <Dbt.h>
 #include "EventHandler.h"
@@ -60,7 +60,7 @@ UINT newTaskBar = RegisterWindowMessage(TEXT("TaskbarCreated"));
 // last zone selected
 groupset* activeMapping = NULL;
 
-const char* freqNames[] = { "Keep", "60Hz", "90Hz", "120Hz", "144Hz", "165Hz", "240Hz", "300Hz", "360Hz", ""};
+const char* freqNames[] = { "保持", "60Hz", "90Hz", "120Hz", "144Hz", "165Hz", "240Hz", "300Hz", "360Hz", ""};
 const int fvArray[] = { 0, 60, 90, 120, 144, 165, 240, 300, 360 };
 const int* freqValues = fvArray;
 
@@ -382,7 +382,7 @@ void CreateTabControl(HWND parent, int tabsize, const char* names[], const DWORD
 	}
 }
 
-const char* mainTabs[] = { "Lights", "Fans and Power", "Profiles", "Settings" };
+const char* mainTabs[] = { "灯光", "风扇与电源", "配置", "设置" };
 const DWORD resTabs[] = { IDD_DIALOG_LIGHTS, IDD_DIALOG_FAN, IDD_DIALOG_PROFILES, IDD_DIALOG_SETTINGS };
 const DLGPROC procTabs[] = { (DLGPROC)TabLightsDialog, (DLGPROC)TabFanDialog, (DLGPROC)TabProfilesDialog, (DLGPROC)TabSettingsDialog };
 
@@ -441,7 +441,7 @@ BOOL CALLBACK MainDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 			conf->Save();
 			fxhl->ClearAndRefresh(true);
 			fxhl->Refresh();
-			ShowNotification(&conf->niData, "Configuration saved!", "Configuration saved successfully.");
+			ShowNotification(&conf->niData, "配置已保存", "配置保存成功。");
 			break;
 		case IDC_PROFILE_EFFECTS:
 			conf->activeProfile->effmode = (IsDlgButtonChecked(hDlg, LOWORD(wParam)) == BST_CHECKED);
@@ -535,7 +535,7 @@ BOOL CALLBACK MainDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 					i->id, (LPSTR)i->name.c_str());
 			}
 
-			ModifyMenu(tMenu, ID_TRAYMENU_PROFILES, MF_ENABLED | MF_BYCOMMAND | MF_STRING | MF_POPUP, (UINT_PTR)pMenu, ("Profiles (" + 
+			ModifyMenu(tMenu, ID_TRAYMENU_PROFILES, MF_ENABLED | MF_BYCOMMAND | MF_STRING | MF_POPUP, (UINT_PTR)pMenu, ("配置 (" + 
 				conf->activeProfile->name + ")").c_str());
 
 			CheckMenuItem(tMenu, ID_TRAYMENU_ENABLEEFFECTS, conf->enableEffects ? MF_CHECKED : MF_UNCHECKED);

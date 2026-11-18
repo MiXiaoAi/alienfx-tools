@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "EventHandler.h"
 #include "FXHelper.h"
 #include "MonHelper.h"
@@ -168,7 +168,7 @@ BOOL CALLBACK TabSettingsDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM l
 			if (state) {
 				if (!(conf->fanControl = DetectFans())) {
 					CheckDlgButton(hDlg, IDC_FANCONTROL, BST_UNCHECKED);
-					ShowNotification(&conf->niData, "Error", "Fan control not available.");
+					ShowNotification(&conf->niData, "错误", "风扇控制不可用。");
 				}
 			}
 			else {

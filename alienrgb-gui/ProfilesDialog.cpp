@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "EventHandler.h"
 #include "FXHelper.h"
 #include "ConfigFan.h"
@@ -25,10 +25,10 @@ extern const int* freqValues;
 profile* prof = NULL;
 AlienRGB_SDK::Afx_device* activeEffectDevice = NULL;
 
-const char* ge_names8[] = { "Off", "Color or Morph", "Pulse", "Back Morph", "Breath", "Spectrum",
-	"One key (K)", "Circle out (K)", "Wave out (K)", "Right wave (K)", "Default", "Rain Drop (K)",
-	"Wave", "Rainbow wave", "Circle wave", "Random white (K)", ""},
-	*ge_names5[] = { "Off", "Static", "Breathing", "Side Wave", "Dual Wave", "Pulse", "Morph", "Bounce", "Laser", "Rainbow", ""};
+const char* ge_names8[] = { "关闭", "纯色或渐变", "脉冲", "反向渐变", "呼吸", "光谱",
+	"单键 (K)", "扩散圆环 (K)", "扩散波纹 (K)", "右向波纹 (K)", "默认", "雨滴 (K)",
+	"波浪", "彩虹波纹", "环形波纹", "随机白点 (K)", ""},
+	*ge_names5[] = { "关闭", "静态", "呼吸", "侧向波纹", "双向波纹", "脉冲", "渐变", "弹跳", "激光", "彩虹", ""};
 /*
 	0 - off
 	1 - static color
@@ -41,7 +41,7 @@ const char* ge_names8[] = { "Off", "Color or Morph", "Pulse", "Back Morph", "Bre
 	12 - off
 	14 - rainbow
 */
-const char* cModeNames[] = { "Single-color", "Multi-color", "Rainbow", ""};
+const char* cModeNames[] = { "单色", "多色", "彩虹", ""};
 const int ge_types8[]{ 0,1,2,3,7,8,9,10,11,12,13,14,15,16,17,18 }, ge_types5[]{ 0,1,2,3,4,8,9,10,11,14 };
 
 deviceeffect* FindDevEffect(int type, bool remove = false) {
@@ -240,7 +240,7 @@ void ReloadProfSettings(HWND hDlg) {
 	CheckDlgButton(hDlg, IDC_TRIGGER_POWER_BATTERY, prof && prof->triggerFlags & PROF_TRIGGER_BATTERY);
 	CheckDlgButton(hDlg, IDC_TRIGGER_KEYS, prof && prof->triggerkey);
 
-	SetDlgItemText(hDlg, IDC_TRIGGER_KEYS, ("Keyboard (" + (prof && prof->triggerkey ? GetKeyName(prof->triggerkey) : "Off") + ")").c_str());
+	SetDlgItemText(hDlg, IDC_TRIGGER_KEYS, ("键盘 (" + (prof && prof->triggerkey ? GetKeyName(prof->triggerkey) : "关") + ")").c_str());
 	SetDlgItemText(hDlg, IDC_SCRIPT_NAME, prof ? prof->script.c_str() : NULL);
 
 	UpdateCombo(GetDlgItem(hDlg, IDC_COMBO_FREQ), freqNames, prof ? prof->freqMode : 0, freqValues);
@@ -318,14 +318,14 @@ BOOL CALLBACK TabProfilesDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM l
 			prof = new profile(prof ? *prof : *conf->activeProfile);
 			prof->id = vacID;
 			prof->flags &= ~PROF_DEFAULT;
-			prof->name = "Profile " + to_string(vacID);
+			prof->name = "配置 " + to_string(vacID);
 			conf->profiles.push_back(prof);
 			UpdateProfileList();
 			ReloadProfileView(hDlg);
 		} break;
 		case IDC_REMOVEPROFILE:
 			if (!(prof->flags & PROF_DEFAULT) && conf->profiles.size() > 1) {
-				if (WarningBox(hDlg, "Do you really want to remove selected profile and all settings for it?")) {
+				if (WarningBox(hDlg, "确实要删除所选配置及其全部设置吗？")) {
 					for (auto pf = conf->profiles.begin(); pf != conf->profiles.end(); pf++)
 						if (*pf == prof) {
 							auto newCid = conf->profiles.erase(pf);
@@ -343,10 +343,10 @@ BOOL CALLBACK TabProfilesDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM l
 				}
 			}
 			else
-				ShowNotification(&conf->niData, "Error", "Can't delete last or default profile!");
+				ShowNotification(&conf->niData, "错误", "不能删除最后一个或默认配置！");
 			break;
 		case IDC_BUT_PROFRESET:
-			if (WarningBox(hDlg, "Do you really want to remove selected settings from this profile?")) {
+			if (WarningBox(hDlg, "确实要从该配置中删除所选设置吗？")) {
 				for (auto it = prof->lightsets.begin(); it != prof->lightsets.end();) {
 					if (IsDlgButtonChecked(hDlg, IDC_CP_COLORS) == BST_CHECKED)
 						it->color.clear();

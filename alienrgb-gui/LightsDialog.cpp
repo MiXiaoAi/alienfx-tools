@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include <common.h>
 
 BOOL CALLBACK TabColorDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -99,7 +99,7 @@ void OnLightSelChanged(HWND hwndDlg)
 
 #ifndef _DEBUG
 	if (!conf->afx_dev.activeLights) {
-		ShowNotification(&conf->niData, "No lights defined", "Assign some lights first!");
+		ShowNotification(&conf->niData, "未定义灯光", "请先分配灯光！");
 		tabLightSel = TAB_DEVICES;
 		TabCtrl_SetCurSel(hwndDlg, tabLightSel);
 	}
@@ -143,7 +143,7 @@ void OnLightSelChanged(HWND hwndDlg)
 	}
 }
 
-const char* lightTabNames[] = { "Colors", "Events Monitoring", "Ambient", "Haptics", "Grid Effect", "Devices and Grids" };
+const char* lightTabNames[] = { "颜色", "事件监控", "环境光", "触感", "网格灯效", "设备与网格" };
 const DWORD lightRes[] = { IDD_DIALOG_COLORS, IDD_DIALOG_EVENTS, IDD_DIALOG_AMBIENT, IDD_DIALOG_HAPTICS, IDD_DIALOG_GRIDEFFECT, IDD_DIALOG_DEVICES };
 const DLGPROC lightsProc[] = { (DLGPROC)TabColorDialog, (DLGPROC)TabEventsDialog, (DLGPROC)TabAmbientDialog, (DLGPROC)TabHapticsDialog,
 			(DLGPROC)TabGridDialog, (DLGPROC)TabDevicesDialog };

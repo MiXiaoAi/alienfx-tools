@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "FXHelper.h"
 #include "EventHandler.h"
 #include "common.h"
@@ -64,7 +64,7 @@ BOOL CALLBACK AddZoneDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 	{
 	case WM_INITDIALOG:
 	{
-		ListBox_SetItemData(grouplist, ListBox_AddString(grouplist, "<New Zone>"), -1);
+		ListBox_SetItemData(grouplist, ListBox_AddString(grouplist, "<新建区域>"), -1);
 		if (conf->afx_dev.GetGroups()->empty()) {
 			SendMessage(hDlg, WM_COMMAND, MAKEWPARAM(IDC_LIST_GROUPS, LBN_SELCHANGE), 0);
 		}
@@ -154,7 +154,7 @@ BOOL CALLBACK SelectLightsDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 	return true;
 }
 
-static const string gaugetypes[] = { "Off", "Horizontal", "Vertical", "Diagonal (left)", "Diagonal (right)", "Radial", ""};
+static const string gaugetypes[] = { "关闭", "水平", "垂直", "对角(左)", "对角(右)", "径向", ""};
 
 BOOL CALLBACK ZoneSelectionDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
 

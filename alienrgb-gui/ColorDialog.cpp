@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "FXHelper.h"
 #include "Common.h"
 
@@ -14,7 +14,7 @@ extern FXHelper* fxhl;
 
 int effID = 0;
 
-const char* lightEffectNames[] { "Color", "Pulse", "Morph", "Breath", "Spectrum", "Rainbow", "" };
+const char* lightEffectNames[] { "颜色", "脉冲", "渐变", "呼吸", "光谱", "彩虹", "" };
 
 void SetEffectData(HWND hDlg) {
 	bool hasEffects = activeMapping && activeMapping->color.size();

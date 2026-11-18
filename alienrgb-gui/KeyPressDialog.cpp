@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 
 HHOOK dEvent;
 HWND kDlg;
@@ -11,7 +11,7 @@ string GetKeyName(WORD vkcode) {
 	res.resize(GetKeyNameText(scancode << 16, (LPSTR)res.c_str(), 127));
 	//res.shrink_to_fit();
 	if (res.empty())
-		res = "Unknown key";
+		res = "未知按键";
 	return res;
 }
 
@@ -25,7 +25,7 @@ LRESULT CALLBACK DetectKeyProc(int nCode, WPARAM wParam, LPARAM lParam) {
 			(LPSTR)keySetLight->name.c_str(), 127));
 		//keySetLight->name.shrink_to_fit();
 		if (keySetLight->name.empty())
-			keySetLight->name = "Unknown key";
+			keySetLight->name = "未知按键";
 		keySetLight->scancode = (WORD)(keyblock->vkCode | ((keyblock->flags & 1) << 8));
 		SendMessage(kDlg, WM_CLOSE, 0, 0);
 	}

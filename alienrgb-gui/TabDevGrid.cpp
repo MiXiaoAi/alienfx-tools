@@ -1,4 +1,4 @@
-#include "alienrgb-gui.h"
+﻿#include "alienrgb-gui.h"
 #include "FXHelper.h"
 
 //extern HWND CreateToolTip(HWND hwndParent, HWND oldTip);
@@ -43,7 +43,7 @@ void FindCreateMapping(bool key) {
             }
         }
         else
-            keySetLight->name = "Light " + to_string(eLid + 1);
+            keySetLight->name = "灯光 " + to_string(eLid + 1);
     }
 }
 
