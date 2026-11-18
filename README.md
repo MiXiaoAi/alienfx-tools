@@ -1,5 +1,7 @@
 # Alien Tools
 
+[![Build](https://github.com/MiXiaoAi/alienfx-tools/actions/workflows/build.yml/badge.svg)](https://github.com/MiXiaoAi/alienfx-tools/actions/workflows/build.yml)
+
 AWCC is not needed anymore - here are light weighted tools for Alienware systems lights, fans, power profile control:
 - [AlienRGB Control](/Doc/alienrgb-gui.md) - AWCC alternative in 500kb. You can control your system lights (including hardware and software effects such as system parameters monitoring, ambient lights, sound haptic), fans, temperatures, power settings, and a lot more.
 - [Alien Monitor](/Doc/alien-mon.md) - System monitoring tool - you can check system health and put important parameters into tray.
